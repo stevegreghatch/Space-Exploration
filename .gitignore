@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+__pycache__
 __pycache__/
 *.py[cod]
 *$py.class
@@ -37,6 +38,7 @@ pip-log.txt
 pip-delete-this-directory.txt
 
 # Unit test / coverage reports
+logging.yaml
 htmlcov/
 .tox/
 .nox/
@@ -45,6 +47,8 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
+reports/coverage.xml
+reports/junit.xml
 *.cover
 *.py,cover
 .hypothesis/
@@ -121,6 +125,7 @@ celerybeat.pid
 
 # Environments
 .env
+venv
 .venv
 env/
 venv/

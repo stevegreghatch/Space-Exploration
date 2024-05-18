@@ -1,15 +1,5 @@
-FROM python:3.12.3-alpine3.19
-
-# Update package lists and install required packages
-RUN apk update && \
-    apk add --no-cache gcompat wget zlib zlib-dev librdkafka librdkafka-dev && \
-    apk del --no-cache gcc build-base
-
-# Set up user and directory permissions
-RUN adduser -S -u 1000 -g runuser runuser && \
-    mkdir -p /var/log && \
-    touch /var/log/app.log && \
-    chmod -R 777 /var/log
+# Build stage
+FROM python:3.12.3-alpine3.12 as builder
 
 # Set working directory
 WORKDIR /opt
@@ -22,6 +12,12 @@ COPY src/ /opt/src/
 RUN pip install --upgrade pip && \
     pip install -r /opt/requirements.txt && \
     pip cache purge
+
+# Set up user and directory permissions
+RUN adduser -S -u 1000 -g runuser runuser && \
+    mkdir -p /var/log && \
+    touch /var/log/app.log && \
+    chmod -R 777 /var/log
 
 # Switch to non-root user
 USER runuser

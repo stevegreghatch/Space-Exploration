@@ -1,8 +1,8 @@
-from unittest import mock
+import unittest
 
 
-class TestDummyTest:
+class TestDummyTest(unittest.TestCase):
 
     def test_dummy_test(self):
         output = 'hi'
-        assert output == 'hi'
+        self.assertEqual(output, 'hi')

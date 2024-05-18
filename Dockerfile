@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.12.3-alpine3.19
+FROM python:3.12.3-alpine3.19 as builder
 
 # Set working directory
 WORKDIR /opt

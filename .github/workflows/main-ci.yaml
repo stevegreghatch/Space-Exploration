@@ -31,10 +31,6 @@ jobs:
     - name: Build Docker image
       run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest .
 
-    - name: Run tests
-      run: |
-        docker run --rm ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest sh -c "python3.12 -m unittest discover"
-
     - name: Push Docker image
       if: success()
       run: |

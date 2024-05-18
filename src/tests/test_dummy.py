@@ -1,8 +1,6 @@
-import unittest
 
-
-class TestDummyTest(unittest.TestCase):
+class TestDummyTest:
 
     def test_dummy_test(self):
         output = 'hi'
-        self.assertEqual(output, 'hi')
+        assert output == 'hi'

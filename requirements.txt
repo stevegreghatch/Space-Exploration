@@ -7,4 +7,4 @@ python-dotenv~=1.0.1
 gql~=3.5.0
 requests~=2.32.2
 
-space-exploration-common-lib==0.0.13
+space-exploration-common-lib==0.0.23

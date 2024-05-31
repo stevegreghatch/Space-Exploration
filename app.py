@@ -4,8 +4,7 @@ import uvicorn
 from dotenv import dotenv_values
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Dict
-from src.main.service.dataService import astronauts, astronauts_by_program
+from src.main.service.dataService import programs, missions_by_program, astronauts_by_mission
 
 env_vars = dotenv_values(".env")
 NASA_API_KEY = env_vars.get('NASA_API_KEY')
@@ -57,33 +56,41 @@ def main():
     uvicorn.run(app, port=8080, host='0.0.0.0', access_log=False)
 
 
-@app.get('/test/logging')
-def log_check():
-    logger.info('Logger is working')
-    return 'Logger is working'
+# @app.get('/test/logging')
+# def log_check():
+#     logger.info('Logger is working')
+#     return 'Logger is working'
+#
+#
+# @app.get('/health')
+# def health_check():
+#     return {'STATUS": "UP'}
 
 
-@app.get('/health')
-def health_check():
-    return {'STATUS": "UP'}
+@app.get('/programs')
+async def get_programs():
+    logger.info('received request to get programs')
+    return await programs()
 
 
-@app.get('/astronauts')
-async def get_astronauts():
-    logger.info('request received to get astronauts')
-    return await astronauts()
-
-
-@app.get('/astronauts/program')
-async def get_astronauts_by_program(program: str) -> List[Dict]:
+@app.get('/missions/{program}')
+async def get_missions_by_program(program: str):
     try:
-        logger.info(f'Request received to get astronauts for program: {program}')
-        astronaut_data = await astronauts_by_program(program)
-        return astronaut_data.get('astronautsByProgram', [])  # Assuming 'astronautsByProgram' is the key containing the list of astronaut data
+        missions = await missions_by_program(program)
+        return missions
     except Exception as e:
-        logger.error(f"An error occurred while fetching astronauts: {e}")
-        raise HTTPException(status_code=500, detail="Failed to fetch astronauts")
+        logger.error(f"An error occurred while fetching missions for program {program}: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
+
+@app.get('/astronauts/{mission}')
+async def get_astronauts_by_mission(mission: str):
+    try:
+        astronauts = await astronauts_by_mission(mission)
+        return astronauts
+    except Exception as e:
+        logger.error(f"An error occurred while fetching astronauts for mission {mission}: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
 if __name__ == '__main__':

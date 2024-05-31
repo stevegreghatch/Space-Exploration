@@ -34,6 +34,65 @@ async def programs():
         raise exception
 
 
+async def missions():
+    try:
+        transport = AIOHTTPTransport(url=GRAPHQL_URL)
+        client = Client(transport=transport, fetch_schema_from_transport=True)
+        async with client as session:
+            ds = DSLSchema(client.schema)
+            query = dsl_gql(
+                DSLQuery(
+                    ds.Query.missions.select(
+                        ds.MissionType.mission,
+                        ds.MissionType.astronauts,
+                        ds.MissionType.program,
+                        ds.MissionType.call_sign,
+                        ds.MissionType.image_url,
+                        ds.MissionType.spacecraft_number,
+                        ds.MissionType.launch_time,
+                        ds.MissionType.launch_site,
+                        ds.MissionType.duration.select(
+                            ds.DurationType.days,
+                            ds.DurationType.hours,
+                            ds.DurationType.minutes,
+                            ds.DurationType.seconds,
+                        ),
+                        ds.MissionType.orbits,
+                        ds.MissionType.apogee_mi,
+                        ds.MissionType.perigee_mi,
+                        ds.MissionType.velocity_max_mph,
+                        ds.MissionType.miss_mi
+                    )
+                )
+            )
+            mission_data = await session.execute(query)
+            return mission_data
+    except Exception as exception:
+        raise exception
+
+
+async def astronauts():
+    try:
+        transport = AIOHTTPTransport(url=GRAPHQL_URL)
+        client = Client(transport=transport, fetch_schema_from_transport=True)
+        async with client as session:
+            ds = DSLSchema(client.schema)
+            query = dsl_gql(
+                DSLQuery(
+                    ds.Query.astronauts.select(
+                        ds.AstronautType.astronaut_first_name,
+                        ds.AstronautType.astronaut_last_name,
+                        ds.AstronautType.image_url,
+                        ds.AstronautType.missions
+                    )
+                )
+            )
+            astronaut_data = await session.execute(query)
+            return astronaut_data
+    except Exception as exception:
+        raise exception
+
+
 async def missions_by_program(program):
     try:
         transport = AIOHTTPTransport(url=GRAPHQL_URL)

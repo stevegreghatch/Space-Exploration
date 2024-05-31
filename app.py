@@ -4,7 +4,7 @@ import uvicorn
 from dotenv import dotenv_values
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from src.main.service.dataService import programs, missions_by_program, astronauts_by_mission
+from src.main.service.dataService import programs, missions, astronauts, missions_by_program, astronauts_by_mission
 
 env_vars = dotenv_values(".env")
 NASA_API_KEY = env_vars.get('NASA_API_KEY')
@@ -69,15 +69,26 @@ def main():
 
 @app.get('/programs')
 async def get_programs():
-    logger.info('received request to get programs')
+    logger.info('received request to get all programs')
     return await programs()
+
+
+@app.get('/missions')
+async def get_missions():
+    logger.info('received request to get all missions')
+    return await missions()
+
+
+@app.get('/astronauts')
+async def get_astronauts():
+    logger.info('received request to get all astronauts')
+    return await astronauts()
 
 
 @app.get('/missions/{program}')
 async def get_missions_by_program(program: str):
     try:
-        missions = await missions_by_program(program)
-        return missions
+        return await missions_by_program(program)
     except Exception as e:
         logger.error(f"An error occurred while fetching missions for program {program}: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
@@ -86,8 +97,7 @@ async def get_missions_by_program(program: str):
 @app.get('/astronauts/{mission}')
 async def get_astronauts_by_mission(mission: str):
     try:
-        astronauts = await astronauts_by_mission(mission)
-        return astronauts
+        return await astronauts_by_mission(mission)
     except Exception as e:
         logger.error(f"An error occurred while fetching astronauts for mission {mission}: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")

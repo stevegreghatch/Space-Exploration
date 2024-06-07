@@ -24,6 +24,7 @@ async def programs():
                 DSLQuery(
                     ds.Query.programs.select(
                         ds.ProgramType.program,
+                        ds.ProgramType.missions,
                         ds.ProgramType.image_url
                     )
                 )
@@ -48,20 +49,24 @@ async def missions():
                         ds.MissionType.program,
                         ds.MissionType.call_sign,
                         ds.MissionType.image_url,
-                        ds.MissionType.spacecraft_number,
-                        ds.MissionType.launch_time,
+                        ds.MissionType.launch_date_utc,
+                        ds.MissionType.launch_mass_lbs,
                         ds.MissionType.launch_site,
+                        ds.MissionType.launch_site_coord,
+                        ds.MissionType.launch_vehicle,
+                        ds.MissionType.orbits,
+                        ds.MissionType.apogee_nmi,
+                        ds.MissionType.perigee_nmi,
+                        ds.MissionType.landing_date_utc,
+                        ds.MissionType.landing_site,
+                        ds.MissionType.landing_site_coord,
+                        ds.MissionType.recovery_ship,
                         ds.MissionType.duration.select(
                             ds.DurationType.days,
                             ds.DurationType.hours,
                             ds.DurationType.minutes,
-                            ds.DurationType.seconds,
-                        ),
-                        ds.MissionType.orbits,
-                        ds.MissionType.apogee_mi,
-                        ds.MissionType.perigee_mi,
-                        ds.MissionType.velocity_max_mph,
-                        ds.MissionType.miss_mi
+                            ds.DurationType.seconds
+                        )
                     )
                 )
             )
@@ -107,20 +112,24 @@ async def missions_by_program(program):
                         ds.MissionType.program,
                         ds.MissionType.call_sign,
                         ds.MissionType.image_url,
-                        ds.MissionType.spacecraft_number,
-                        ds.MissionType.launch_time,
+                        ds.MissionType.launch_date_utc,
+                        ds.MissionType.launch_mass_lbs,
                         ds.MissionType.launch_site,
+                        ds.MissionType.launch_site_coord,
+                        ds.MissionType.launch_vehicle,
+                        ds.MissionType.orbits,
+                        ds.MissionType.apogee_nmi,
+                        ds.MissionType.perigee_nmi,
+                        ds.MissionType.landing_date_utc,
+                        ds.MissionType.landing_site,
+                        ds.MissionType.landing_site_coord,
+                        ds.MissionType.recovery_ship,
                         ds.MissionType.duration.select(
                             ds.DurationType.days,
                             ds.DurationType.hours,
                             ds.DurationType.minutes,
-                            ds.DurationType.seconds,
-                        ),
-                        ds.MissionType.orbits,
-                        ds.MissionType.apogee_mi,
-                        ds.MissionType.perigee_mi,
-                        ds.MissionType.velocity_max_mph,
-                        ds.MissionType.miss_mi
+                            ds.DurationType.seconds
+                        )
                     )
                 )
             )

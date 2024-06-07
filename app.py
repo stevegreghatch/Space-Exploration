@@ -43,7 +43,8 @@ def get_images(query: str):
         for item in data.get('collection', {}).get('items', []):
             for link in item.get('links', []):
                 if 'href' in link:
-                    image_urls.append(link['href'])
+                    if link['href'].lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
+                        image_urls.append(link['href'])
         return image_urls
     except Exception as e:
         logger.error(f"Error fetching images from NASA API: {e}")

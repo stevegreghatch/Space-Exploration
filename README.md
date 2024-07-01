@@ -1,6 +1,6 @@
-# Space-Exploration Service
+# Space Exploration Service
 
-The Space-Exploration Service provides backend functionality for querying and processing data related to space exploration missions. It utilizes FastAPI to expose endpoints that interact with the persistence service for data retrieval and manipulation.
+The Space Exploration Service provides backend functionality for querying and processing data related to space exploration missions. It utilizes FastAPI to expose endpoints that interact with the persistence service for data retrieval and manipulation.
 
 ## Overview
 
@@ -8,7 +8,7 @@ The Space-Exploration Service acts as the backend engine, serving data via HTTP 
 
 ## Running Locally
 
-To run the Space-Exploration Service locally, you'll need to set it up alongside the Space-Exploration Persistence Service and the Space-Exploration UI.
+To run the Space-Exploration Service locally, you'll need to set it up alongside the Space Exploration Persistence Service and the Space Exploration UI.
 
 ### Prerequisites
 

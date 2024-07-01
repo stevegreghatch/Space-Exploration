@@ -10,10 +10,6 @@ The Space Exploration Service acts as the backend engine, serving data via HTTP 
 
 To run the Space Exploration Service locally, you'll need to set it up alongside the Space Exploration Persistence Service and the Space Exploration UI.
 
-### Prerequisites
-
-- Ensure Docker is installed and running on your machine.
-
 ### Setup and Installation
 
 1. **Clone the Repository**:
@@ -25,6 +21,8 @@ To run the Space Exploration Service locally, you'll need to set it up alongside
    
 2. **Run app.py**
 
+3. **Access Service**
+   - navigate to http://localhost:8081/graphql
 
 ## Project Links
 

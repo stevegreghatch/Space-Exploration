@@ -13,11 +13,6 @@ To run the Space Exploration Service locally, you'll need to set it up alongside
 ### Prerequisites
 
 - Ensure Docker is installed and running on your machine.
-- Clone the necessary repositories:
-
-  ```sh
-  git clone https://github.com/stevegreghatch/Space-Exploration.git
-  ```
 
 ### Setup and Installation
 
@@ -28,18 +23,17 @@ To run the Space Exploration Service locally, you'll need to set it up alongside
    cd Space-Exploration
    ```
 
-2. **Build and Run with Docker**:
+2. **Build the Docker Image**:
 
    ```sh
-   docker build -t space-exploration-service:latest .
-   docker run -d -p 8000:8000 --name space-exploration-service space-exploration-service:latest
+   docker build -t persistence-service:latest .
    ```
 
-   This command builds the Docker image and runs the service in a Docker container.
+3. **Run the Docker Container**:
 
-3. **Access the API**:
-
-   Once running, the API endpoints can be accessed locally at `http://localhost:8000`.
+   ```sh
+   docker run -d -p 8000:8000 --name space-exploration-service space-exploration-service:latest
+   ```
 
 ## Project Links
 

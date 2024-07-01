@@ -12,7 +12,6 @@ To run the Space-Exploration Service locally, you'll need to set it up alongside
 
 ### Prerequisites
 
-- Python 3.7 or higher installed.
 - Clone the necessary repositories:
 
   ```sh

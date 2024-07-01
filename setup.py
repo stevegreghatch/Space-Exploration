@@ -6,8 +6,7 @@ setup(
     python_requires='>=3.12, <4',
     include_package_data=True,
     install_requires=[
-        'fastapi',
-        'uvicorn',
+        'fastapi'
     ],
     scripts=["app.py"]
 )

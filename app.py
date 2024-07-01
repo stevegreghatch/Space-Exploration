@@ -4,7 +4,9 @@ import uvicorn
 from dotenv import dotenv_values
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from src.main.service.dataService import programs, missions, astronauts, missions_by_program, astronauts_by_mission
+from src.main.service.mappingService2D import generate_map_data
 
 env_vars = dotenv_values(".env")
 NASA_API_KEY = env_vars.get('NASA_API_KEY')
@@ -18,10 +20,9 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Enable CORS (Cross-Origin Resource Sharing) to allow communication with React frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow requests from any origin (you may restrict this in production)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
@@ -36,36 +37,56 @@ def get_images(query: str):
         logger.error("NASA API key not found in environment variables.")
         raise HTTPException(status_code=500, detail="NASA API key not found")
     try:
-        response = requests.get(NASA_API_URL, params={'q': query})
+        response = requests.get(NASA_API_URL, params={'q': query, 'media_type': 'image'})
         response.raise_for_status()
         data = response.json()
-        image_urls = []
+
+        images_info = []
+
         for item in data.get('collection', {}).get('items', []):
+            image_data = {
+                'title': None,
+                'description': None,
+                'link': None
+            }
+
+            if item_data := item.get('data', []):
+                image_data['title'] = item_data[0].get('title')
+                image_data['description'] = item_data[0].get('description')
+
             for link in item.get('links', []):
-                if 'href' in link:
-                    if link['href'].lower().endswith(('.png', '.jpg', '.jpeg', '.gif')):
-                        image_urls.append(link['href'])
-        return image_urls
+                if link.get('rel') == 'preview' and link.get('href'):
+                    image_data['link'] = link['href']
+
+            images_info.append(image_data)
+
+        return images_info
+
     except Exception as e:
         logger.error(f"Error fetching images from NASA API: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch images from NASA API")
 
 
-def main():
-    logger.info('Logger configured')
-    logger.info('Starting FastAPI application')
-    uvicorn.run(app, port=8080, host='0.0.0.0', access_log=False)
+@app.get('/map/{mission_name}', response_class=JSONResponse)
+async def get_map(mission_name: str):
+    try:
+        logger.info(f'Received request to generate map for mission: {mission_name}')
+        all_missions = await missions()
+        mission_data = next((m for m in all_missions['missions'] if m['mission'] == mission_name), None)
+        if not mission_data:
+            raise HTTPException(status_code=404, detail="Mission not found")
 
+        launch_site_dms = mission_data['launchSiteCoord']
+        landing_site_dms = mission_data['landingSiteCoord']
 
-# @app.get('/test/logging')
-# def log_check():
-#     logger.info('Logger is working')
-#     return 'Logger is working'
-#
-#
-# @app.get('/health')
-# def health_check():
-#     return {'STATUS": "UP'}
+        fig = generate_map_data(mission_name, launch_site_dms, landing_site_dms)
+
+        fig_json = fig.to_dict()
+
+        return JSONResponse(content=fig_json)
+    except Exception as e:
+        logger.error(f"Error generating map: {e}")
+        raise HTTPException(status_code=500, detail="Failed to generate map")
 
 
 @app.get('/programs')
@@ -102,6 +123,12 @@ async def get_astronauts_by_mission(mission: str):
     except Exception as e:
         logger.error(f"An error occurred while fetching astronauts for mission {mission}: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+def main():
+    logger.info('Logger configured')
+    logger.info('Starting FastAPI application')
+    uvicorn.run(app, port=8080, host='0.0.0.0', access_log=False)
 
 
 if __name__ == '__main__':

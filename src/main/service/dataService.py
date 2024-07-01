@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from gql import Client
 from gql.dsl import DSLSchema, DSLQuery, dsl_gql
@@ -54,9 +53,6 @@ async def missions():
                         ds.MissionType.launch_site,
                         ds.MissionType.launch_site_coord,
                         ds.MissionType.launch_vehicle,
-                        ds.MissionType.orbits,
-                        ds.MissionType.apogee_nmi,
-                        ds.MissionType.perigee_nmi,
                         ds.MissionType.landing_date_utc,
                         ds.MissionType.landing_site,
                         ds.MissionType.landing_site_coord,
@@ -66,6 +62,20 @@ async def missions():
                             ds.DurationType.hours,
                             ds.DurationType.minutes,
                             ds.DurationType.seconds
+                        ),
+                        ds.MissionType.earth_orbit.select(
+                            ds.OrbitType.orbits,
+                            ds.OrbitType.apoapsis_km,
+                            ds.OrbitType.periapsis_km,
+                            ds.OrbitType.inclination_deg,
+                            ds.OrbitType.period_min
+                        ),
+                        ds.MissionType.target_orbit.select(
+                            ds.OrbitType.orbits,
+                            ds.OrbitType.apoapsis_km,
+                            ds.OrbitType.periapsis_km,
+                            ds.OrbitType.inclination_deg,
+                            ds.OrbitType.period_min
                         )
                     )
                 )
@@ -117,9 +127,6 @@ async def missions_by_program(program):
                         ds.MissionType.launch_site,
                         ds.MissionType.launch_site_coord,
                         ds.MissionType.launch_vehicle,
-                        ds.MissionType.orbits,
-                        ds.MissionType.apogee_nmi,
-                        ds.MissionType.perigee_nmi,
                         ds.MissionType.landing_date_utc,
                         ds.MissionType.landing_site,
                         ds.MissionType.landing_site_coord,
@@ -129,6 +136,20 @@ async def missions_by_program(program):
                             ds.DurationType.hours,
                             ds.DurationType.minutes,
                             ds.DurationType.seconds
+                        ),
+                        ds.MissionType.earth_orbit.select(
+                            ds.OrbitType.orbits,
+                            ds.OrbitType.apoapsis_km,
+                            ds.OrbitType.periapsis_km,
+                            ds.OrbitType.inclination_deg,
+                            ds.OrbitType.period_min
+                        ),
+                        ds.MissionType.target_orbit.select(
+                            ds.OrbitType.orbits,
+                            ds.OrbitType.apoapsis_km,
+                            ds.OrbitType.periapsis_km,
+                            ds.OrbitType.inclination_deg,
+                            ds.OrbitType.period_min
                         )
                     )
                 )

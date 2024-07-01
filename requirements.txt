@@ -6,5 +6,7 @@ pymongo~=4.7.2
 python-dotenv~=1.0.1
 gql~=3.5.0
 requests~=2.32.2
+plotly~=5.22.0
+numpy~=2.0.0
 
-space-exploration-common-lib==0.0.39
+space-exploration-common-lib==0.0.44

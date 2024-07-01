@@ -22,18 +22,9 @@ To run the Space Exploration Service locally, you'll need to set it up alongside
    git clone https://github.com/stevegreghatch/Space-Exploration.git
    cd Space-Exploration
    ```
+   
+2. **Run app.py**
 
-2. **Build the Docker Image**:
-
-   ```sh
-   docker build -t persistence-service:latest .
-   ```
-
-3. **Run the Docker Container**:
-
-   ```sh
-   docker run -d -p 8000:8000 --name space-exploration-service space-exploration-service:latest
-   ```
 
 ## Project Links
 

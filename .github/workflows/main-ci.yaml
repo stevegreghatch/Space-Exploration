@@ -29,11 +29,11 @@ jobs:
       uses: docker/setup-qemu-action@v2
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest .
 
     - name: Push Docker image
       if: success()
       run: |
-        docker tag ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest ${{ secrets.DOCKER_USERNAME }}/my-python-app:${{ github.sha }}
-        docker push ${{ secrets.DOCKER_USERNAME }}/my-python-app:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/my-python-app:${{ github.sha }}
+        docker tag ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ github.sha }}

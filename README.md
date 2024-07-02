@@ -1,14 +1,31 @@
-# Space Exploration
+# Space Exploration Service
 
-## About the application
-sample text
+The Space Exploration Service provides backend functionality for querying and processing data related to space exploration missions. It utilizes FastAPI to expose endpoints that interact with the persistence service for data retrieval and manipulation.
 
-## Available Scripts
+## Overview
 
-#### coverage html
+The Space Exploration Service acts as the backend engine, serving data via HTTP endpoints to the frontend UI. It connects to the Persistence Service for GraphQL-based data operations and management.
 
-#### python -m build
+## Running Locally
 
-#### 'pip install -r requirements.txt'
+To run the Space Exploration Service locally, you'll need to set it up alongside the Space Exploration Persistence Service and the Space Exploration UI.
 
-#### python -m pytest --cov-report=xml:reports/coverage.xml --cov-report term-missing --cov=src -W ignore
+### Setup and Installation
+
+1. **Clone the Repository**:
+
+   ```sh
+   git clone https://github.com/stevegreghatch/Space-Exploration.git
+   cd Space-Exploration
+   ```
+   
+2. **Run app.py**
+
+3. **Access Service**
+   - navigate to http://localhost:8081/graphql
+
+## Project Links
+
+- **Persistence Service**: [Space Exploration Persistence Service](https://github.com/stevegreghatch/space-exploration-persistence-service)
+- **Frontend UI**: [Space Exploration UI](https://github.com/stevegreghatch/space-exploration-ui)
+- **Common Library**: [Space Exploration Common Library](https://github.com/stevegreghatch/space-exploration-common-lib)

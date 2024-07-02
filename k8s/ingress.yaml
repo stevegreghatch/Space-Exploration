@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: space-exploration-ingress
+spec:
+  rules:
+  - host: history-from-the-frontier.com
+    http:
+      paths:
+      - path: /space-exploration
+        pathType: Prefix
+        backend:
+          service:
+            name: space-exploration
+            port:
+              number: 8080

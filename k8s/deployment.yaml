@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: space-exploration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: space-exploration
+  template:
+    metadata:
+      labels:
+        app: space-exploration
+    spec:
+      containers:
+      - name: space-exploration
+        image: stevegreghatch/space-exploration:latest
+        ports:
+        - containerPort: 8080

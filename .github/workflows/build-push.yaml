@@ -31,7 +31,7 @@ jobs:
         id: version
         run: |
           git fetch --tags
-          latest_tag=$(git describe --tags --abbrev=0)
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           if [ -z "$latest_tag" ]; then
             new_version="0.0.1"
           else
@@ -58,9 +58,17 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ env.new_version }}
           docker push ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest
 
-      - name: Push new tag
+      - name: Push new or updated tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git tag ${{ env.new_version }}
-          git push origin ${{ env.new_version }}
+          git fetch --tags
+          existing_tag=$(git tag --list ${{ env.new_version }})
+          if [ -z "$existing_tag" ]; then
+            git tag ${{ env.new_version }}
+            git push origin ${{ env.new_version }}
+          else
+            new_version=$(python -c "import semver; print(semver.bump_patch('$existing_tag'))")
+            git tag $new_version
+            git push origin $new_version
+          fi

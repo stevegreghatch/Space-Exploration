@@ -31,7 +31,7 @@ jobs:
         id: version
         run: |
           git fetch --tags
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          latest_tag=$(git describe --tags --abbrev=0)
           if [ -z "$latest_tag" ]; then
             new_version="0.0.1"
           else

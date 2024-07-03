@@ -27,9 +27,10 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel semver
           pip install -r requirements.txt
 
-      - name: Get latest version and increment
+      - name: Get latest tag
         id: version
         run: |
+          git fetch --tags
           latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           if [ -z "$latest_tag" ]; then
             new_version="0.0.1"

@@ -11,7 +11,6 @@ jobs:
 
     permissions:
       contents: write
-      id-token: write
 
     steps:
       - name: Checkout code
@@ -35,9 +34,13 @@ jobs:
           if [ -z "$latest_tag" ]; then
             new_version="0.0.1"
           else
-            new_version=$(python -c "import semver; print(semver.bump_patch('$latest_tag'))")
+            new_version="$latest_tag"
+            while git rev-parse --quiet --verify "refs/tags/${new_version}"; do
+              echo "Tag ${new_version} already exists. Incrementing..."
+              new_version=$(python -c "import semver; print(semver.bump_patch('${new_version}'))")
+            done
           fi
-          echo "new_version=$new_version" >> $GITHUB_ENV
+          echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -45,30 +48,19 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ env.new_version }} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ env.new_version }} ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ env.new_version }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ env.NEW_VERSION }} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/space-exploration:${{ env.NEW_VERSION }} ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/space-exploration:latest
 
       - name: Push new or updated tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: success()
         run: |
-          git fetch --tags
-          existing_tag=$(git tag --list ${{ env.new_version }})
-          if [ -z "$existing_tag" ]; then
-            git tag ${{ env.new_version }}
-            git push origin ${{ env.new_version }}
-          else
-            new_version=$(python -c "import semver; print(semver.bump_patch('$existing_tag'))")
-            git tag $new_version
-            git push origin $new_version
-          fi
+          new_version="${{ env.NEW_VERSION }}"
+          while git rev-parse --quiet --verify "refs/tags/${new_version}"; do
+            new_version=$(python -c "import semver; print(semver.bump_patch('${new_version}'))")
+          done
+          echo "Creating new tag: ${new_version}"
+          git tag "${new_version}"
+          git push origin "${new_version}"

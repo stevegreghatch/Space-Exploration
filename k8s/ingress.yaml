@@ -1,16 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: space-exploration-ingress
+  name: api-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
   - host: api.history-from-the-frontier.com
     http:
       paths:
-      - path: /space-exploration
+      - path: /space-exploration(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: space-exploration
             port:
               number: 8080
+      - path: /persistence(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: persistence-service
+            port:
+              number: 8081

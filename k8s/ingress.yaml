@@ -9,15 +9,15 @@ spec:
   - host: api.history-from-the-frontier.com
     http:
       paths:
-      - path: /space-exploration(/|$)(.*)
-        pathType: Prefix
+      - pathType: Prefix
+        path: /space-exploration(/|$)(.*)
         backend:
           service:
             name: space-exploration
             port:
               number: 8080
-      - path: /persistence(/|$)(.*)
-        pathType: Prefix
+      - pathType: Prefix
+        path: /persistence(/|$)(.*)
         backend:
           service:
             name: persistence-service

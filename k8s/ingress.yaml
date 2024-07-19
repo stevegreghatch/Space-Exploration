@@ -2,8 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   ingressClassName: nginx
   rules:
@@ -17,10 +17,10 @@ spec:
                 name: space-exploration
                 port:
                   number: 8080
-          - path: /persistence
-            pathType: Prefix
-            backend:
-              service:
-                name: persistence-service
-                port:
-                  number: 8081
+#          - path: /persistence
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: persistence-service
+#                port:
+#                  number: 8081

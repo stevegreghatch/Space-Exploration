@@ -10,7 +10,7 @@ spec:
     - host: api.history-from-the-frontier.com
       http:
         paths:
-          - path: /space-exploration
+          - path: /
             pathType: Prefix
             backend:
               service:

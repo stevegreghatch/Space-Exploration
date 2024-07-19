@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: api-ingress
   annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /docs
     nginx.ingress.kubernetes.io/health-check-path: "/health"
 spec:
   ingressClassName: nginx

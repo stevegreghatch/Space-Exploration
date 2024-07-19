@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-ingress
+  name: api-space-exploration-ingress
   annotations:
     nginx.ingress.kubernetes.io/health-check-path: "/health"
 spec:

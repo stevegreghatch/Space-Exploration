@@ -130,6 +130,11 @@ async def get_test_response():
     return True
 
 
+@app.get('/health')
+def health_check():
+    return {'STATUS": "UP'}
+
+
 def main():
     logger.info('Logger configured')
     logger.info('Starting FastAPI application')

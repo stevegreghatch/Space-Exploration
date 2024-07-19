@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: api.history-from-the-frontier.com
+    - host: api-space-exploration.history-from-the-frontier.com
       http:
         paths:
           - path: /
@@ -17,10 +17,3 @@ spec:
                 name: space-exploration
                 port:
                   number: 8080
-#          - path: /persistence
-#            pathType: Prefix
-#            backend:
-#              service:
-#                name: persistence-service
-#                port:
-#                  number: 8081

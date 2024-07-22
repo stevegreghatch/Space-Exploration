@@ -4,6 +4,7 @@ metadata:
   name: api-space-exploration-ingress
   annotations:
     nginx.ingress.kubernetes.io/health-check-path: "/health"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
   rules:

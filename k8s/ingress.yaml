@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-space-exploration-ingress
-  namespace: default
   annotations:
     nginx.ingress.kubernetes.io/health-check-path: "/health"
 spec:
@@ -20,5 +19,5 @@ spec:
                   number: 8080
   tls:
     - hosts:
-        - api-space-exploration.history-from-the-frontier.com
-      secretName: space-exploration-ui-tls
+        - "*.history-from-the-frontier.com"
+      secretName: wildcard-certificate-tls

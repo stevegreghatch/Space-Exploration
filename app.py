@@ -125,11 +125,6 @@ async def get_astronauts_by_mission(mission: str):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-@app.get('/space-exploration/test')
-async def get_test_response():
-    return True
-
-
 @app.get('/health')
 def health_check():
     return {'STATUS": "UP'}

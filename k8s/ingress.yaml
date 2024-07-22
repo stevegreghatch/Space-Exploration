@@ -20,5 +20,5 @@ spec:
                   number: 8080
   tls:
     - hosts:
-        - "*.history-from-the-frontier.com"
+        - "api-space-exploration.history-from-the-frontier.com"
       secretName: wildcard-certificate-tls

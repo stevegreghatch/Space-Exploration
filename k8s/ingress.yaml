@@ -4,7 +4,7 @@ metadata:
   name: api-space-exploration-ingress
   annotations:
     nginx.ingress.kubernetes.io/health-check-path: "/health"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    networking.gke.io/managed-certificates: "api-space-exploration-certificate"
 spec:
   rules:
   - host: "api-space-exploration.history-from-the-frontier.com"
@@ -17,7 +17,3 @@ spec:
             name: api-space-exploration
             port:
               number: 8080
-  tls:
-  - hosts:
-    - "api-space-exploration.history-from-the-frontier.com"
-    secretName: api-space-exploration-certificate-tls

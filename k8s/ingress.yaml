@@ -3,7 +3,6 @@ kind: Ingress
 metadata:
   name: api-space-exploration-ingress
   annotations:
-    nginx.ingress.kubernetes.io/health-check-path: "/health"
     networking.gke.io/managed-certificates: "api-space-exploration-certificate"
 spec:
   rules:

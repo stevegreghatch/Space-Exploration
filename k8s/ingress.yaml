@@ -6,19 +6,18 @@ metadata:
     nginx.ingress.kubernetes.io/health-check-path: "/health"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  ingressClassName: nginx
   rules:
-    - host: api-space-exploration.history-from-the-frontier.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: space-exploration
-                port:
-                  number: 8080
+  - host: "api-space-exploration.history-from-the-frontier.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-space-exploration
+            port:
+              number: 8080
   tls:
-    - hosts:
-        - "api-space-exploration.history-from-the-frontier.com"
-      secretName: wildcard-certificate-tls
+  - hosts:
+    - "api-space-exploration.history-from-the-frontier.com"
+    secretName: api-space-exploration-certificate-tls

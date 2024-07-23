@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: api-space-exploration-certificate-tls
+  namespace: default
+spec:
+  secretName: api-space-exploration-certificate-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: "api-space-exploration.history-from-the-frontier.com"
+  dnsNames:
+    - "api-space-exploration.history-from-the-frontier.com"
+  usages:
+    - digital signature
+    - key encipherment

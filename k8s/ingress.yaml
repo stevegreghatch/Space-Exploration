@@ -4,7 +4,7 @@ metadata:
   name: api-space-exploration-ingress
   annotations:
     kubernetes.io/ingress.global-static-ip-name: address
-    networking.gke.io/managed-certificates: managed-cert-space-exploration
+    networking.gke.io/managed-certificates: managed-cert-ui
     kubernetes.io/ingress.class: gce
 spec:
   defaultBackend:

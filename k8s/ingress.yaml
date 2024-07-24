@@ -3,17 +3,12 @@ kind: Ingress
 metadata:
   name: api-space-exploration-ingress
   annotations:
-    kubernetes.io/ingress.class: "nginx"
-    networking.gke.io/managed-certificates: "api-space-exploration-certificate"
+    kubernetes.io/ingress.global-static-ip-name: address
+    networking.gke.io/managed-certificates: managed-cert-space-exploration
+    kubernetes.io/ingress.class: gce
 spec:
-  rules:
-  - host: "api-space-exploration.history-from-the-frontier.com"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: space-exploration
-            port:
-              number: 8080
+  defaultBackend:
+    service:
+      name: api-space-exploration-service
+      port:
+        number: 8080

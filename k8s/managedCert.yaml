@@ -1,7 +1,0 @@
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: api-space-exploration-certificate
-spec:
-  domains:
-    - "api-space-exploration.history-from-the-frontier.com"
